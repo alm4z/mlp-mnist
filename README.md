@@ -2,6 +2,9 @@
 Pure Numpy implementation of MNIST classification task.
 This implementation includes automatic MNIST dataset loading and preparing script.
 
+[Jupyter notebook](https://github.com/alm4z/mlp-mnist/blob/master/demo.ipynb)
+
+
 ## How it use?
 
 ```sh
