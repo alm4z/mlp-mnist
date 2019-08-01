@@ -1,0 +1,14 @@
+
+.DS_Store
+.idea/encodings.xml
+.idea/misc.xml
+.idea/mlp-mnist.iml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/workspace.xml
+.ipynb_checkpoints/demo-checkpoint.ipynb
+__pycache__/activations.cpython-37.pyc
+__pycache__/batchnorm.cpython-37.pyc
+__pycache__/mlp.cpython-37.pyc
+__pycache__/mnist.cpython-37.pyc
+data/mnist.pkl.gz

@@ -13,13 +13,18 @@ import activations as ac
 np.random.seed(11785)
 
 
+
+
+
 class MLP(object):
     """
     A multilayer perceptron with batch normalization and momentum
     """
 
-    def __init__(self, input_size, output_size, hiddens, activations, weight_init_fn, bias_init_fn, criterion, lr,
-                 momentum=0.0, num_bn_layers=0):
+
+    def __init__(self, input_size=784, output_size=10, hiddens=[64,32], activations=[ac.Sigmoid(), ac.Sigmoid(), ac.Sigmoid()], \
+                  criterion=ac.SoftmaxCrossEntropy(),\
+                 lr=0.008, momentum=0.856, num_bn_layers=1):
         self.train_mode = True
         self.num_bn_layers = num_bn_layers
         self.bn = num_bn_layers > 0
@@ -34,8 +39,8 @@ class MLP(object):
         self.W = None
         self.b = None
 
-        self.weight_init_fn = weight_init_fn
-        self.bias_init_fn = bias_init_fn
+       # self.weight_init_fn = weight_init_fn
+       # self.bias_init_fn = bias_init_fn
 
         if self.bn:
             self.bn_layers = [bn.BatchNorm(hiddens[t]) for t in range(0,num_bn_layers)]
@@ -63,6 +68,15 @@ class MLP(object):
     def eval(self):
         self.train_mode = False
 
+    # random weight init
+    def weight_init(self, x, y):
+        return np.random.randn(x, y)
+
+    # zero bias init
+    def bias_init(self, x):
+        return np.zeros((1, x))
+
+
     def re_init(self):
 
         """ Model init function.
@@ -77,14 +91,14 @@ class MLP(object):
         #layers
         if len(self.hiddens):
             for idx in range(self.nlayers-1):
-                weights.append(self.weight_init_fn(layer_size,self.hiddens[idx]))
+                weights.append(self.weight_init(layer_size,self.hiddens[idx]))
                 layer_size = self.hiddens[idx]
 
-                biases.append(self.bias_init_fn(layer_size))
+                biases.append(self.bias_init(layer_size))
 
         # output layer
-        weights.append(self.weight_init_fn(layer_size,self.output_size))
-        biases.append(self.bias_init_fn(self.output_size))
+        weights.append(self.weight_init(layer_size,self.output_size))
+        biases.append(self.bias_init(self.output_size))
 
         self.W = weights
         self.b = biases
